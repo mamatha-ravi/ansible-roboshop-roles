@@ -15,7 +15,7 @@
 
 - name: install maven
   ansible.builtin.dnf:
-      name: maven
+      name: mysql
       state: present
 
 - name: install dependencie
