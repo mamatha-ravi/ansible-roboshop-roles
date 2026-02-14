@@ -12,4 +12,11 @@
 - name: systemd setup
   ansible.builtin.import_role:
      name: common
-     tasks_from: nodejs_setup.yaml
+     tasks_from: systemd_setup.yaml
+
+- name: enable and start user
+  ansible.builtin.service:
+      name: user
+      state: restarted
+      enabled: yes
+     
