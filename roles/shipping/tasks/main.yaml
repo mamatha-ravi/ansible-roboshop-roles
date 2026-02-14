@@ -13,12 +13,12 @@
      name: common
      tasks_from: systemd_setup.yaml
 
-- name: install maven
+- name: install mysql
   ansible.builtin.dnf:
       name: mysql
       state: present
 
-- name: install dependencie
+- name: install dependencies
   ansible.builtin.pip:
       name: "{{ item }}"
       executable: pip3.9
@@ -26,21 +26,21 @@
   - cryptography
   - PyMySQL
 
-  - name: import shipping data
-    community.mysql.mysql_db:
+- name: import shipping data
+  community.mysql.mysql_db:
       state: import
       name: all
       login_host: "{{ MYSQL_HOST }}"
       login_user: "{{ MYSQL_USER }}"
       login_password: "{{ MYSQL_PASSWORD }}"
       target: "{{ item }}"
-    loop:
-    - /app/db/schema.sql
-    - /app/db/app-user.sql 
-    - /app/db/master-data.sql
+  loop:
+  - /app/db/schema.sql
+  - /app/db/app-user.sql 
+  - /app/db/master-data.sql
 
-  - name: start and enable shipping
-    ansible.builtin.service:
+- name: start and enable shipping
+  ansible.builtin.service:
       name: shipping
       state: restarted
       enabled: yes
