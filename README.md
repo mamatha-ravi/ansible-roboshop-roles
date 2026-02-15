@@ -24,27 +24,33 @@ Provide Access Key, Secret Key, and Default Region (e.g., us-east-1)
 
 Use code with caution.
 
-📁 Project Structure
-
+🏗️ Project Structure
+ansible-roboshop-roles/
 │
-├── group_vars/
 ├── ansible.cfg
 ├── inventory.ini
-├── roboshop.yml
+├── roboshop.yaml
+├── group_vars/
 │
 └── roles/
-    ├── common/
-    ├── frontend/
-    ├── catalogue/
     ├── cart/
-    ├── user/
-    ├── shipping/
-    ├── payment/
+    ├── catalogue/
+    │   ├── files/
+    │   ├── meta/
+    │   ├── tasks/
+    │   ├── templates/
+    │
+    ├── common/
+    │   └── tasks/
+    │
+    ├── frontend/
     ├── mongodb/
     ├── mysql/
+    ├── payment/
+    ├── rabbitmq/
     ├── redis/
-   ├── rabbimq/
-
+    ├── shipping/
+    ├── user/
  ⚙️ Ansible Configuration
 
 --> ansible.cfg
@@ -88,6 +94,24 @@ ansible-playbook -e component=catalogue roboshop.yaml
 ---
 
 🐞 Troubleshooting
+
+
+  DBs only need Port Checks
+   
+    databases:
+      mongodb: 27017
+      redis: 6379
+      mysql: 3306
+      rabbitmq: 5672
+
+    #Apps need HTTP Health Checks
+    apps:
+      catalogue: 8080
+      user: 8080
+      cart: 8080
+      shipping: 8080
+      payment: 8080
+      frontend: 80
 
 1. Connection Refused (Port Issue)
  Check service status:
